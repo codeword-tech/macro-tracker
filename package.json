@@ -2,7 +2,7 @@
   "name": "tinybird-tracker.js",
   "version": "0.1.4",
   "description": "Tinybird tracker",
-  "source": "src/index.js",
+  "source": "src/index.ts",
   "main": "dist/tinybird-tracker.js",
   "module": "dist/tinybird-tracker.m.js",
   "unpkg": "dist/tinybird-tracker.umd.js",
@@ -22,6 +22,7 @@
     "babel-jest": "^27.3.1",
     "jest": "^27.3.1",
     "microbundle": "^0.14.1",
+    "typescript": "^5.2.2",
     "unfetch": "^4.2.0"
   },
   "engines": {
@@ -29,7 +30,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/tinybirdco/tinybird-tracker.git"
+    "url": "git+ssh://git@github.com/codeword-tech  /tinybird-tracker.git"
   },
   "keywords": [
     "tinybird",
