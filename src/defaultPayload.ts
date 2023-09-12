@@ -1,15 +1,17 @@
+import { clientId, organizationId } from './constants'
+import { getSavedInitialReferrer, saveInitialReferrer } from './initialReferrer'
+import { decodePromotionalURL } from './promotionalUrl'
 import { timezones } from './timezones'
-import { getUserId } from './userId'
+import { getSavedUser, saveUser } from './userId'
 
 export function getDefaultPayload() {
-  const qs = new URLSearchParams(window.location.search)
-  const utmContent = qs.get('utm_content')
-  const utmSource = qs.get('utm_source')
-  const utmMedium = qs.get('utm_medium')
-  const utmTerm = qs.get('utm_term')
-  const utmCampaign = qs.get('utm_campaign')
-  // TODO: save it and send it for later
-  const utmUserId = getUserId()
+  const { activityId, activityPlatform, campaignId, adId, userId, utmTerm } =
+    decodePromotionalURL(window.location.host + window.location.href)
+
+  const savedUserId = getSavedUser()
+  const savedInitialReferrer = getSavedInitialReferrer()
+
+  const initialReferrer = getSavedInitialReferrer()
   const referrer = document.referrer
   const pathname = window.location.pathname
   const href = window.location.href
@@ -33,18 +35,36 @@ export function getDefaultPayload() {
     // ignore error
   }
 
+  // save one time data for later
+  if (userId) {
+    saveUser(userId)
+  }
+
+  if (activityId) {
+    saveInitialReferrer(activityId)
+  }
+
   return {
+    ...(initialReferrer && { initialReferrer }),
     ...(referrer && { referrer }),
     ...(pathname && { pathname }),
     ...(href && { href }),
     ...(userAgent && { userAgent }),
     ...(locale && { locale }),
     ...(country && { country }),
-    ...(utmContent && { utmContent }),
-    ...(utmSource && { utmSource }),
-    ...(utmMedium && { utmMedium }),
+    ...(savedUserId && { savedUserId }),
+    ...(savedInitialReferrer && { savedInitialReferrer }),
+    // ...(utmContent && { utmContent }),
+    // ...(utmSource && { utmSource }),
+    // ...(utmMedium && { utmMedium }),
+    // ...(utmCampaign && { utmCampaign }),
+    // ...(utmUserId && { utmUserId }),
     ...(utmTerm && { utmTerm }),
-    ...(utmCampaign && { utmCampaign }),
-    ...(utmUserId && { utmUserId })
+    ...(adId && { adId }),
+    ...(activityId && { activityId }),
+    ...(campaignId && { campaignId }),
+    ...(activityPlatform && { activityPlatform }),
+    clientId,
+    organizationId
   }
 }

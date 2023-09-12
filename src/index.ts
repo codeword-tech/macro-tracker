@@ -1,9 +1,9 @@
 import { trackEvent } from './trackEvent'
 import { trackPageHit } from './trackPageHit'
-import { identifyUser } from './userId'
+import { saveUser } from './userId'
 
 // Client
-;(window as any).Macro = { trackEvent, identifyUser }
+;(window as any).Macro = { trackEvent, identifyUser: saveUser }
 
 // Event listener
 window.addEventListener('hashchange', trackPageHit)
