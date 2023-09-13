@@ -1,6 +1,7 @@
 import { clientId, organizationId } from './constants'
 import { getSavedInitialReferrer, saveInitialReferrer } from './initialReferrer'
 import { decodePromotionalURL } from './promotionalURL'
+import { getSessionId } from './sessionId'
 import { timezones } from './timezones'
 import { getSavedUser, saveUser } from './userId'
 
@@ -10,6 +11,7 @@ export function getDefaultPayload() {
 
   const savedUserId = getSavedUser()
   const savedInitialReferrer = getSavedInitialReferrer()
+  const sessionId = getSessionId()
 
   const initialReferrer = getSavedInitialReferrer()
   const referrer = document.referrer
@@ -45,26 +47,23 @@ export function getDefaultPayload() {
   }
 
   return {
-    ...(initialReferrer && { initialReferrer }),
+    ...((initialReferrer || savedInitialReferrer) && {
+      initialReferrer: initialReferrer || savedInitialReferrer
+    }),
     ...(referrer && { referrer }),
     ...(pathname && { pathname }),
     ...(href && { href }),
     ...(userAgent && { userAgent }),
     ...(locale && { locale }),
     ...(country && { country }),
-    ...(savedUserId && { savedUserId }),
-    ...(savedInitialReferrer && { savedInitialReferrer }),
-    // ...(utmContent && { utmContent }),
-    // ...(utmSource && { utmSource }),
-    // ...(utmMedium && { utmMedium }),
-    // ...(utmCampaign && { utmCampaign }),
-    // ...(utmUserId && { utmUserId }),
+    ...((savedUserId || userId) && { userId: userId || savedUserId }),
     ...(utmTerm && { utmTerm }),
     ...(adId && { adId }),
     ...(activityId && { activityId }),
     ...(campaignId && { campaignId }),
     ...(activityPlatform && { activityPlatform }),
     clientId,
+    sessionId,
     organizationId
   }
 }

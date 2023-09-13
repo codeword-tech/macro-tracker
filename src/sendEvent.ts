@@ -27,8 +27,9 @@ export async function sendEvent(name: string, payload: Record<string, any>) {
       timestamp: new Date().toISOString(),
       action: name,
       version: '1',
-      session_id: getSessionId(),
-      payload: JSON.stringify(payload)
+      sessionId: getSessionId(),
+      payload: JSON.stringify(payload),
+      ...payload
     })
   )
 }
