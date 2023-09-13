@@ -1,6 +1,6 @@
 import { clientId, organizationId } from './constants'
 import { getSavedInitialReferrer, saveInitialReferrer } from './initialReferrer'
-import { decodePromotionalURL } from './promotionalUrl'
+import { decodePromotionalURL } from './promotionalURL'
 import { timezones } from './timezones'
 import { getSavedUser, saveUser } from './userId'
 

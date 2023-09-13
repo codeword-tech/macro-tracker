@@ -1,27 +1,27 @@
 import { trackEvent } from './trackEvent'
-import { trackPageHit } from './trackPageHit'
+import { trackViewPage } from './trackViewPage'
 import { saveUser } from './userId'
 
 // Client
 ;(window as any).Macro = { trackEvent, identifyUser: saveUser }
 
 // Event listener
-window.addEventListener('hashchange', trackPageHit)
+window.addEventListener('hashchange', trackViewPage)
 const his = window.history
 
 if (his.pushState) {
   const originalPushState = his['pushState']
   his.pushState = function () {
     originalPushState.apply(this, arguments)
-    trackPageHit()
+    trackViewPage()
   }
-  window.addEventListener('popstate', trackPageHit)
+  window.addEventListener('popstate', trackViewPage)
 }
 
 let lastPage
 function handleVisibilityChange() {
   if (!lastPage && document.visibilityState === 'visible') {
-    trackPageHit()
+    trackViewPage()
   }
 }
 
@@ -29,5 +29,5 @@ function handleVisibilityChange() {
 if ((document as any).visibilityState === 'prerender') {
   document.addEventListener('visibilitychange', handleVisibilityChange)
 } else {
-  trackPageHit()
+  trackViewPage()
 }
