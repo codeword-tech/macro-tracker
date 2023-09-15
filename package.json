@@ -1,11 +1,12 @@
 {
-  "name": "tinybird-tracker.js",
+  "name": "macro-tracker.js",
   "version": "0.1.4",
   "description": "Tinybird tracker",
   "source": "src/index.ts",
-  "main": "dist/tinybird-tracker.js",
-  "module": "dist/tinybird-tracker.m.js",
-  "unpkg": "dist/tinybird-tracker.umd.js",
+  "main": "dist/macro-tracker.js",
+  "module": "dist/macro-tracker.m.js",
+  "private": true,
+  "unpkg": "dist/macro-tracker.umd.js",
   "scripts": {
     "build": "npm run dev:build",
     "dev": "npm run dev:build",
@@ -14,7 +15,7 @@
     "test": "jest",
     "test:watch": "jest --watch --detectOpenHandles"
   },
-  "author": "Tinybird team",
+  "author": "Macro team",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -30,10 +31,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/codeword-tech  /tinybird-tracker.git"
+    "url": "git+ssh://git@github.com/codeword-tech/macro-tracker.git"
   },
   "keywords": [
-    "tinybird",
     "analytics",
     "tracker",
     "library",
