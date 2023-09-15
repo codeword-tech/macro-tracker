@@ -249,6 +249,7 @@ export const timezones = {
   'Atlantic/South_Georgia': 'GS',
   'Asia/Tashkent': 'UZ',
   'Asia/Kolkata': 'IN',
+  'Asia/Calcutta': 'IN',
   'America/St_Johns': 'CA',
   'Asia/Srednekolymsk': 'RU',
   'Asia/Yakutsk': 'RU',
