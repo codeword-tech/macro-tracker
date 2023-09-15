@@ -1,4 +1,8 @@
 import { clientId, organizationId } from './constants'
+import {
+  getSavedInitialActivityId,
+  saveInitialActivityId
+} from './initialAcitivityId'
 import { getSavedInitialReferrer, saveInitialReferrer } from './initialReferrer'
 import { decodePromotionalURL } from './promotionalURL'
 import { getSessionId } from './sessionId'
@@ -21,6 +25,7 @@ export function getDefaultPayload() {
 
   const savedUserId = getSavedUser()
   const savedInitialReferrer = getSavedInitialReferrer()
+  const savedInitialActivityId = getSavedInitialActivityId()
   const sessionId = getSessionId()
 
   const initialReferrer = activityId
@@ -59,11 +64,18 @@ export function getDefaultPayload() {
     saveUser(userId)
   }
 
+  if (referrer) {
+    saveInitialReferrer(referrer)
+  }
+
   if (activityId) {
-    saveInitialReferrer(activityId)
+    saveInitialActivityId(activityId)
   }
 
   return {
+    // order matters here in initialReferrer
+    // we first check the current referrer if not present we check
+    // saved referrer
     ...((initialReferrer || savedInitialReferrer) && {
       initialReferrer: initialReferrer || savedInitialReferrer
     }),
@@ -77,6 +89,9 @@ export function getDefaultPayload() {
     ...(utmTerm && { utmTerm }),
     ...(adId && { adId }),
     ...(activityId && { activityId }),
+    ...((activityId || savedInitialActivityId) && {
+      initialActivityId: activityId || savedInitialActivityId
+    }),
     ...(campaignId && { campaignId }),
     ...(activityPlatform && { activityPlatform }),
     ...(timezone && { timezone }),
