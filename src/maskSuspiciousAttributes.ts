@@ -6,10 +6,10 @@ export const maskSuspiciousAttributes = (
   payload: Record<string, any>
 ): Record<string, any> => {
   const attributesToMask = [
-    'username',
-    'user',
-    'user_id',
-    'userid',
+    // 'username',
+    // 'user',
+    // 'user_id',
+    // 'userid',
     'password',
     'pass',
     'pin',

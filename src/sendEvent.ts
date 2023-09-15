@@ -28,7 +28,6 @@ export async function sendEvent(name: string, payload: Record<string, any>) {
       action: name,
       version: '1',
       sessionId: getSessionId(),
-      payload: JSON.stringify(payload),
       ...payload
     })
   )

@@ -6,23 +6,40 @@ import { timezones } from './timezones'
 import { getSavedUser, saveUser } from './userId'
 
 export function getDefaultPayload() {
-  const { activityId, activityPlatform, campaignId, adId, userId, utmTerm } =
-    decodePromotionalURL(window.location.host + window.location.href)
+  const {
+    activityId,
+    activityPlatform,
+    campaignId,
+    adId,
+    userId,
+    utmTerm,
+    utmCampaign,
+    utmContent,
+    utmMedium,
+    utmSource
+  } = decodePromotionalURL(window.location.host + window.location.href)
 
   const savedUserId = getSavedUser()
   const savedInitialReferrer = getSavedInitialReferrer()
   const sessionId = getSessionId()
 
-  const initialReferrer = getSavedInitialReferrer()
+  const initialReferrer = activityId
   const referrer = document.referrer
   const pathname = window.location.pathname
   const href = window.location.href
   const userAgent = window.navigator.userAgent
   let locale = ''
   let country = ''
+  let timezone = ''
+  let screenWidth = null
+  let screenHeight = null
+  let screenDpi = null
 
   try {
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    screenWidth = window.screen.width
+    screenHeight = window.screen.height
+    screenDpi = window.devicePixelRatio
+    timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
     country = timezones[timezone]
     locale =
       navigator.languages && navigator.languages.length
@@ -62,6 +79,14 @@ export function getDefaultPayload() {
     ...(activityId && { activityId }),
     ...(campaignId && { campaignId }),
     ...(activityPlatform && { activityPlatform }),
+    ...(timezone && { timezone }),
+    ...(screenWidth && { screenWidth }),
+    ...(screenHeight && { screenHeight }),
+    ...(screenDpi && { screenDpi }),
+    ...(utmCampaign && { utmCampaign }),
+    ...(utmContent && { utmContent }),
+    ...(utmMedium && { utmMedium }),
+    ...(utmSource && { utmSource }),
     clientId,
     sessionId,
     organizationId

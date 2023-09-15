@@ -1,10 +1,14 @@
 interface PromotionalUrlOptions {
   userId?: string
-  campaignId: string
-  activityId: string
-  activityPlatform: 'EMAIL'
+  campaignId?: string
+  activityId?: string
+  activityPlatform?: 'EMAIL'
   adId?: string
   utmTerm?: string
+  utmCampaign?: string
+  utmMedium?: string
+  utmSource?: string
+  utmContent?: string
 }
 
 export function encodePromotionalURL(
@@ -48,6 +52,10 @@ export function decodePromotionalURL(_url: string): PromotionalUrlOptions {
     activityId: url.searchParams.get('utm_medium'),
     activityPlatform: url.searchParams.get('utm_source') as 'EMAIL',
     adId: url.searchParams.get('utm_content'),
+    utmCampaign: url.searchParams.get('utm_campaign'),
+    utmMedium: url.searchParams.get('utm_medium'),
+    utmSource: url.searchParams.get('utm_source'),
+    utmContent: url.searchParams.get('utm_content'),
     utmTerm: url.searchParams.get('utm_term')
   }
 }

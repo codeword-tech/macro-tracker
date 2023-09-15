@@ -1,8 +1,8 @@
-import { INITIAL_REFERRER_KEY } from './constants'
+import { INITIAL_REFERRER_COOKIE_KEY } from './constants'
 import { getCookie, setCookie } from './cookie'
 
 export function getSavedInitialReferrer(): string | null {
-  const initialReferrerCookie = getCookie(INITIAL_REFERRER_KEY)
+  const initialReferrerCookie = getCookie(INITIAL_REFERRER_COOKIE_KEY)
 
   if (initialReferrerCookie) {
     return initialReferrerCookie
@@ -14,5 +14,9 @@ export function getSavedInitialReferrer(): string | null {
 export function saveInitialReferrer(initialReferrer: string) {
   const numberOfSecondsInAYear = 31536000
 
-  return setCookie(INITIAL_REFERRER_KEY, initialReferrer, numberOfSecondsInAYear)
+  return setCookie(
+    INITIAL_REFERRER_COOKIE_KEY,
+    initialReferrer,
+    numberOfSecondsInAYear
+  )
 }

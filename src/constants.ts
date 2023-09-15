@@ -1,6 +1,6 @@
 export const SESSION_COOKIE_KEY = 'session-id'
 export const USER_COOKIE_KEY = 'user-id'
-export const INITIAL_REFERRER_KEY = 'initial-referrer'
+export const INITIAL_REFERRER_COOKIE_KEY = 'initial-referrer'
 export let DATASOURCE = 'analytics_events'
 
 export let proxy: string,
