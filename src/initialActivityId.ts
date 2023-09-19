@@ -14,9 +14,11 @@ export function getSavedInitialActivityId(): string | null {
 export function saveInitialActivityId(initialActivityId: string) {
   const numberOfSecondsInAYear = 31536000
 
-  return setCookie(
+  setCookie(
     INITIAL_ACTIVITY_ID_COOKIE_KEY,
     initialActivityId,
     numberOfSecondsInAYear
   )
+
+  return initialActivityId
 }

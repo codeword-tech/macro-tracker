@@ -14,9 +14,6 @@ export function getSavedInitialReferrer(): string | null {
 export function saveInitialReferrer(initialReferrer: string) {
   const numberOfSecondsInAYear = 31536000
 
-  return setCookie(
-    INITIAL_REFERRER_COOKIE_KEY,
-    initialReferrer,
-    numberOfSecondsInAYear
-  )
+  setCookie(INITIAL_REFERRER_COOKIE_KEY, initialReferrer, numberOfSecondsInAYear)
+  return initialReferrer
 }

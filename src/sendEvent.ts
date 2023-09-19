@@ -1,5 +1,4 @@
 import { proxy, host, DATASOURCE, token } from './constants'
-import { getSessionId, setSessionId } from './sessionId'
 
 /**
  * Use `trackEvent` for sending events with default payload.
@@ -7,7 +6,6 @@ import { getSessionId, setSessionId } from './sessionId'
  *
  */
 export async function sendEvent(name: string, payload: Record<string, any>) {
-  setSessionId()
   let url: string
 
   if (proxy) {
@@ -27,7 +25,6 @@ export async function sendEvent(name: string, payload: Record<string, any>) {
       timestamp: new Date().toISOString(),
       action: name,
       version: '1',
-      sessionId: getSessionId(),
       ...payload
     })
   )

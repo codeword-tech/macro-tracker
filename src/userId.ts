@@ -14,5 +14,6 @@ export function getSavedUser(): string | null {
 export function saveUser(userId: string) {
   const numberOfSecondsInAYear = 31536000
 
-  return setCookie(USER_COOKIE_KEY, userId, numberOfSecondsInAYear)
+  setCookie(USER_COOKIE_KEY, userId, numberOfSecondsInAYear)
+  return userId
 }

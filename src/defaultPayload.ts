@@ -2,10 +2,13 @@ import { clientId, organizationId } from './constants'
 import {
   getSavedInitialActivityId,
   saveInitialActivityId
-} from './initialAcitivityId'
-import { getSavedInitialReferrer, saveInitialReferrer } from './initialReferrer'
+} from './initialActivityId'
+import {
+  getSavedInitialCampaignId,
+  saveInitialCampaignId
+} from './initialCampaignId'
 import { decodePromotionalURL } from './promotionalURL'
-import { getSessionId } from './sessionId'
+import { getSessionIdOrCreate } from './sessionId'
 import { timezones } from './timezones'
 import { getSavedUser, saveUser } from './userId'
 
@@ -15,7 +18,7 @@ export function getDefaultPayload() {
     activityPlatform,
     campaignId,
     adId,
-    userId,
+    userId: newUserId,
     utmTerm,
     utmCampaign,
     utmContent,
@@ -23,12 +26,12 @@ export function getDefaultPayload() {
     utmSource
   } = decodePromotionalURL(window.location.host + window.location.href)
 
-  const savedUserId = getSavedUser()
-  const savedInitialReferrer = getSavedInitialReferrer()
-  const savedInitialActivityId = getSavedInitialActivityId()
-  const sessionId = getSessionId()
+  let userId = getSavedUser()
+  // let initialReferrer = getSavedInitialReferrer()
+  let initialActivityId = getSavedInitialActivityId()
+  let initialCampaignId = getSavedInitialCampaignId()
+  const sessionId = getSessionIdOrCreate()
 
-  const initialReferrer = activityId
   const referrer = document.referrer
   const pathname = window.location.pathname
   const href = window.location.href
@@ -60,38 +63,36 @@ export function getDefaultPayload() {
   }
 
   // save one time data for later
-  if (userId) {
-    saveUser(userId)
+  if (newUserId) {
+    userId = saveUser(newUserId)
   }
 
-  if (referrer) {
-    saveInitialReferrer(referrer)
-  }
+  // if (newReferrer) {
+  //   initialReferrer = saveInitialReferrer(newReferrer)
+  // }
 
   if (activityId) {
-    saveInitialActivityId(activityId)
+    initialActivityId = saveInitialActivityId(activityId)
+  }
+
+  if (campaignId) {
+    initialCampaignId = saveInitialCampaignId(campaignId)
   }
 
   return {
-    // order matters here in initialReferrer
-    // we first check the current referrer if not present we check
-    // saved referrer
-    ...((initialReferrer || savedInitialReferrer) && {
-      initialReferrer: initialReferrer || savedInitialReferrer
-    }),
+    // ...(initialReferrer && { initialReferrer }),
+    ...(initialCampaignId && { initialCampaignId }),
+    ...(initialActivityId && { initialActivityId }),
+    ...(userId && { userId }),
     ...(referrer && { referrer }),
     ...(pathname && { pathname }),
     ...(href && { href }),
     ...(userAgent && { userAgent }),
     ...(locale && { locale }),
     ...(country && { country }),
-    ...((savedUserId || userId) && { userId: userId || savedUserId }),
     ...(utmTerm && { utmTerm }),
     ...(adId && { adId }),
     ...(activityId && { activityId }),
-    ...((activityId || savedInitialActivityId) && {
-      initialActivityId: activityId || savedInitialActivityId
-    }),
     ...(campaignId && { campaignId }),
     ...(activityPlatform && { activityPlatform }),
     ...(timezone && { timezone }),
