@@ -68,6 +68,8 @@ export function decodePromotionalURL(_url: string): PromotionalUrlOptions {
 }
 
 function decodeValue(value: string, identifier: string) {
+  if (!value) return null
+
   if (value.startsWith(identifier)) {
     return value.replace(identifier, '')
   }
