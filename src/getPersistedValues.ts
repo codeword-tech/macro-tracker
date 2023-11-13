@@ -1,4 +1,4 @@
-import { INITIAL_REFERRER_COOKIE_KEY } from '../dist/constants'
+import { REFERRER_KEY } from './constants'
 import {
   CUSTOMER_KEY,
   ACTIVITY_ID_KEY,
@@ -40,7 +40,7 @@ export function getPersistedValue() {
   audienceId = saveValueOrGetValue(AUDIENCE_ID_KEY, audienceId)
   audienceSetId = saveValueOrGetValue(AUDIENCE_SET_ID_KEY, audienceSetId)
   segmentId = saveValueOrGetValue(SEGMENT_ID_KEY, segmentId)
-  const initialReferrer = getCookie(INITIAL_REFERRER_COOKIE_KEY)
+  const initialReferrer = getCookie(REFERRER_KEY)
 
   return {
     activityId,
