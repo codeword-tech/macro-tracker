@@ -1,16 +1,7 @@
 import { clientId, organizationId } from './constants'
-import {
-  getSavedInitialActivityId,
-  saveInitialActivityId
-} from './initialActivityId'
-import {
-  getSavedInitialCampaignId,
-  saveInitialCampaignId
-} from './initialCampaignId'
-import { decodePromotionalURL } from './promotionalURL'
+import { getPersistedValue } from './getPersistedValues'
 import { getSessionIdOrCreate } from './sessionId'
 import { timezones } from './timezones'
-import { getSavedUser, saveUser } from './userId'
 
 export function getDefaultPayload() {
   const {
@@ -18,21 +9,20 @@ export function getDefaultPayload() {
     activityPlatform,
     campaignId,
     adId,
-    userId: newUserId,
+    customerId,
+    adsetId,
+    audienceId,
+    audienceSetId,
+    segmentId,
     utmTerm,
     utmCampaign,
     utmContent,
     utmMedium,
-    utmSource
-  } = decodePromotionalURL(window.location.host + window.location.href)
-
-  let userId = getSavedUser()
-  // let initialReferrer = getSavedInitialReferrer()
-  let initialActivityId = getSavedInitialActivityId()
-  let initialCampaignId = getSavedInitialCampaignId()
+    utmSource,
+    initialReferrer
+  } = getPersistedValue()
   const sessionId = getSessionIdOrCreate()
 
-  const referrer = document.referrer
   const pathname = window.location.pathname
   const href = window.location.href
   const userAgent = window.navigator.userAgent
@@ -62,35 +52,16 @@ export function getDefaultPayload() {
     // ignore error
   }
 
-  // save one time data for later
-  if (newUserId) {
-    userId = saveUser(newUserId)
-  }
-
-  // if (newReferrer) {
-  //   initialReferrer = saveInitialReferrer(newReferrer)
-  // }
-
-  if (activityId) {
-    initialActivityId = saveInitialActivityId(activityId)
-  }
-
-  if (campaignId) {
-    initialCampaignId = saveInitialCampaignId(campaignId)
-  }
-
   return {
-    // ...(initialReferrer && { initialReferrer }),
-    ...(initialCampaignId && { initialCampaignId }),
-    ...(initialActivityId && { initialActivityId }),
-    ...(userId && { userId }),
-    ...(referrer && { referrer }),
+    ...(campaignId && { campaignId }),
+    ...(activityId && { activityId }),
+    ...(customerId && { customerId }),
+    ...(initialReferrer && { initialReferrer }),
     ...(pathname && { pathname }),
     ...(href && { href }),
     ...(userAgent && { userAgent }),
     ...(locale && { locale }),
     ...(country && { country }),
-    ...(utmTerm && { utmTerm }),
     ...(adId && { adId }),
     ...(activityId && { activityId }),
     ...(campaignId && { campaignId }),
@@ -103,6 +74,11 @@ export function getDefaultPayload() {
     ...(utmContent && { utmContent }),
     ...(utmMedium && { utmMedium }),
     ...(utmSource && { utmSource }),
+    ...(utmTerm && { utmTerm }),
+    ...(adsetId && { adsetId }),
+    ...(audienceId && { audienceId }),
+    ...(audienceSetId && { audienceSetId }),
+    ...(segmentId && { segmentId }),
     clientId,
     sessionId,
     organizationId

@@ -1,9 +1,13 @@
+import { CUSTOMER_KEY } from './constants'
 import { trackEvent } from './trackEvent'
 import { trackViewPage } from './trackViewPage'
-import { saveUser } from './userId'
+import { setCookie } from './cookie'
 
 // Client
-;(window as any).Macro = { trackEvent, identifyUser: saveUser }
+;(window as any).Macro = {
+  trackEvent,
+  identifyUser: (value: string) => setCookie(CUSTOMER_KEY, value)
+}
 
 // Event listener
 window.addEventListener('hashchange', trackViewPage)

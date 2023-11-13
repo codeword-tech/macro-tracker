@@ -1,8 +1,15 @@
-export const SESSION_COOKIE_KEY = 'session-id'
-export const USER_COOKIE_KEY = 'user-id'
-export const INITIAL_REFERRER_COOKIE_KEY = 'initial-referrer'
-export const INITIAL_ACTIVITY_ID_COOKIE_KEY = 'initial-activity-id'
-export const INITIAL_CAMPAIGN_ID_COOKIE_KEY = 'initial-campaign-id'
+export const SESSION_KEY = 'session-id'
+export const CUSTOMER_KEY = 'user-id'
+export const REFERRER_KEY = 'initial-referrer'
+export const CAMPAIGN_ID_KEY = 'initial-campaign-id'
+export const ACTIVITY_ID_KEY = 'initial-activity-id'
+export const ACTIVITY_PLATFORM_KEY = 'initial-activity-platform'
+export const ADSET_ID_KEY = 'initial-adset-id'
+export const AUDIENCE_ID_KEY = 'initial-audience-id'
+export const AUDIENCE_SET_ID_KEY = 'initial-audiendce-set-id'
+export const AD_ID_KEY = 'initial-ad-id'
+export const SEGMENT_ID_KEY = 'initial-segment-id'
+
 export let DATASOURCE = 'website_source'
 
 export let proxy: string,

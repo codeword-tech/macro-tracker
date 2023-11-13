@@ -1,4 +1,4 @@
-import { SESSION_COOKIE_KEY } from './constants'
+import { SESSION_KEY } from './constants'
 import { getCookie, setCookie } from './cookie'
 import { uuidv4 } from './uuidv4'
 
@@ -9,7 +9,7 @@ import { uuidv4 } from './uuidv4'
  */
 
 export function getSessionIdOrCreate() {
-  const sessionId = getCookie(SESSION_COOKIE_KEY)
+  const sessionId = getCookie(SESSION_KEY)
 
   if (!sessionId) {
     return createSessionId()
@@ -20,7 +20,7 @@ export function getSessionIdOrCreate() {
 
 export function createSessionId() {
   const sessionId = uuidv4()
-  setCookie(SESSION_COOKIE_KEY, sessionId)
+  setCookie(SESSION_KEY, sessionId)
 
   return sessionId
 }

@@ -1,6 +1,10 @@
 import { domain } from './constants'
 
-export function setCookie(name: string, value: string, maxAge = 1800) {
+export function setCookie(
+  name: string,
+  value: string,
+  maxAge = /** 1 year */ 31536000
+) {
   let cookieValue = `${name}=${value}; Max-Age=${maxAge}; path=/; secure`
 
   if (domain) {
@@ -8,6 +12,8 @@ export function setCookie(name: string, value: string, maxAge = 1800) {
   }
 
   document.cookie = cookieValue
+
+  return cookieValue
 }
 
 export function getCookie(name: string) {
@@ -16,5 +22,6 @@ export function getCookie(name: string) {
     let [key, value] = el.split('=')
     cookie[key.trim()] = value
   })
-  return cookie[name]
+
+  return cookie[name] ?? null
 }
