@@ -26,6 +26,7 @@ export function getDefaultPayload() {
   const pathname = window.location.pathname
   const href = window.location.href
   const userAgent = window.navigator.userAgent
+  const domain = window.location.host
   let locale = ''
   let country = ''
   let timezone = ''
@@ -79,6 +80,7 @@ export function getDefaultPayload() {
     ...(audienceId && { audienceId }),
     ...(audienceSetId && { audienceSetId }),
     ...(segmentId && { segmentId }),
+    domain,
     clientId,
     sessionId,
     organizationId
