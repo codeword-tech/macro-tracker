@@ -17,7 +17,8 @@ export let proxy: string,
   host: string,
   domain: string,
   clientId: string,
-  organizationId: string
+  organizationId: string,
+  triggerDefaultEvent: boolean
 
 if (document.currentScript) {
   host = document.currentScript.getAttribute('data-host')
@@ -26,6 +27,10 @@ if (document.currentScript) {
   domain = document.currentScript.getAttribute('data-domain')
   clientId = document.currentScript.getAttribute('data-client-id')
   organizationId = document.currentScript.getAttribute('data-organization-id')
+  triggerDefaultEvent =
+    document.currentScript.getAttribute('data-trigger-default-event') === 'false'
+      ? false
+      : true
   DATASOURCE = document.currentScript.getAttribute('data-datasource') || DATASOURCE
 
   // for (const attr of Array.from(document.currentScript.attributes)) {
